@@ -1,0 +1,19 @@
+
+
+.teams {
+  border-collapse: collapse;
+}
+.teams th, .teams td {
+  text-align: left;
+  padding: 4px 16px 4px 0; /* Add padding for better spacing */
+}
+
+.teams td:nth-child(1),
+.teams th:nth-child(1) {
+    padding-right: 4rem; /* Add space to the right of cells in the first column */
+}
+
+
+.edit_team {
+  display: none;
+}

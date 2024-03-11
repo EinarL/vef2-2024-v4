@@ -1,6 +1,28 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { Teams } from "@/components/Teams";
 
+
+export default async function Home() {
+  return (
+    <main>
+      <h1>Knattspyrnudeildin</h1>
+      <Teams/>
+    </main>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 export default function Home() {
   return (
     <main className={styles.main}>
@@ -93,3 +115,4 @@ export default function Home() {
     </main>
   );
 }
+*/
