@@ -1,13 +1,32 @@
 import { Teams } from "@/components/Teams";
 
 
+export interface Team {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+}
+
 export default async function Home() {
-  return (
-    <main>
-      <h1>Knattspyrnudeildin</h1>
-      <Teams/>
-    </main>
-  );
+  try{
+    const response = await fetch('https://vfor2-verkefni3.onrender.com/teams', {cache: 'no-store'});
+    if(!response.ok){
+      throw new Error('Failed to fetch teams');
+    }
+
+    const teams: Team[] = await response.json();
+    return (
+      <main>
+        <h1>Knattspyrnudeildin</h1>
+        <Teams teams={teams}/>
+      </main>
+    );
+  } catch(error){
+    console.error('Error fetching teams:', error);
+    return <div>Error fetching teams</div>;
+  }
+
 };
 
 

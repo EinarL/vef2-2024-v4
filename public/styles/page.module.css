@@ -1,3 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+
+.btn{
+  font-size: 25px;
+  padding: 4px 10px;
+  color: white;
+  background-color: rgb(46, 180, 233);
+  border: 2px solid white;
+  border-radius: 5px;
+  transition: all .5s;
+}
+
+.btn:hover {
+  background-color: rgb(14, 137, 185);
+  cursor: pointer;
+}
+
+.material_symbol {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 30px;
+  padding: 1px 6px;
+}
+
 
 
 .teams {

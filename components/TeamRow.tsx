@@ -1,4 +1,5 @@
 'use client';
+import styles from "../public/styles/page.module.css";
 import React, { useState } from 'react';
 
 
@@ -11,6 +12,7 @@ interface TeamRowProps {
 
 export function TeamRow({teamID, teamName, teamDescription, teamSlug}: TeamRowProps){
     const [isOpen, setOpen] = useState(false);
+    const [isDeleted, setDeleted] = useState(false);
     const toggleEdit = () => setOpen(!isOpen);
 
     const [formData, setFormData] = useState({
@@ -59,14 +61,32 @@ export function TeamRow({teamID, teamName, teamDescription, teamSlug}: TeamRowPr
         
     };
 
+    // runs when the user presses the delete button
+    const deleteTeam = async () => {
+        if (!window.confirm(`Ertu viss um að þú vilt eyða ${formData.name}`)) return;
+        try{
+            const response = await fetch(`https://vfor2-verkefni3.onrender.com/teams/${formData.slug}`, { method: 'DELETE' });
+            if (response.ok) {
+                setDeleted(true);
+            } else {
+                console.error('Failed to update team:', response.statusText);
+            }
+        } catch (error) {
+            console.error('An error occurred while updating a team:', error);
+        }
+    }
+
     return (
         <React.Fragment key={teamID}>
-            { !isOpen && (
+            {!isDeleted && !isOpen && (
             <tr>
                 <td>{formData.name}</td>
                 <td>{truncateDescription(formData.description)}</td>
                 <td>
-                    <button onClick={toggleEdit}>Edit</button>
+                    <button onClick={toggleEdit} className={`${styles.btn} ${styles.material_symbol}`}>edit</button>
+                </td>
+                <td>
+                    <button onClick={deleteTeam} className={`${styles.btn} ${styles.material_symbol}`} >delete</button>
                 </td>
             </tr>
             )}
@@ -79,14 +99,13 @@ export function TeamRow({teamID, teamName, teamDescription, teamSlug}: TeamRowPr
                         <textarea id="description" name="description" defaultValue={formData.description} rows={2} cols={40} onChange={handleInputChange}/>
                     </td>
                     <td>
-                        <button onClick={confirmEdit}>Confirm</button>
+                        <button onClick={confirmEdit} className={`${styles.btn} ${styles.material_symbol}`}>check</button>
                     </td>
                 </tr>
             )}
         </React.Fragment>
     );
 }
-
 
 function truncateDescription(description: string, maxLength = 70) {
     if(!description) return description;
