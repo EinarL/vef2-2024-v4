@@ -1,0 +1,32 @@
+
+
+.matches {
+    border-collapse: collapse;
+}
+
+.matches tbody tr:hover {
+    cursor: pointer;
+    color: blue;
+    text-shadow: 0 0 1px blue;
+}
+
+.matches th, .matches td {
+    text-align: left;
+    padding: 4px 16px 4px 0; /* Add padding for better spacing */
+}
+
+.matches td:nth-child(1),
+.matches th:nth-child(1) {
+    padding-right: 4rem; /* Add space to the right of cells in the first column */
+}
+
+
+.matches td:nth-child(2),
+.matches th:nth-child(2) {
+    padding-right: 3rem; /* Add space to the right of cells in the first column */
+}
+
+.matches td:nth-child(5),
+.matches th:nth-child(5) {
+    padding-left: 3rem; /* Add space to the right of cells in the first column */
+}

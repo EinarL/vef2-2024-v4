@@ -1,5 +1,5 @@
 'use client';
-import styles from "../public/styles/page.module.css";
+import styles from "../../public/styles/page.module.css";
 import React, { useState } from "react";
 
 interface AddTeamRowProps{
@@ -20,11 +20,11 @@ export function AddTeamRow({ closeAddEditor, addRow }: AddTeamRowProps){
     };
 
     const handleConfirmAdd = async () => {
-        closeAddEditor();
-        setName(''); // clear the input fields after confirming
-        setDescription('');
         const addedTeam = await confirmAdd(name, description);
         if (addedTeam){
+            closeAddEditor();
+            setName(''); // clear the input fields after confirming
+            setDescription('');
             addRow(addedTeam); // add the team to the html table
         }
     };
@@ -71,11 +71,14 @@ async function confirmAdd(name: string, description: string){
         if (response.ok) {
             return await response.json();;
         } else {
-            console.error('Failed to update team:', response.statusText);
+            const errorResponse = await response.json();
+            const errorMessages = errorResponse.errors.join(', ');
+            alert("Error adding team: " + errorMessages);
             return false;
         }
     } catch (error) {
-        console.error('An error occurred while updating a team:', error);
+        alert("Unable to add the team due to an internal server error");
+        console.error('An error occurred while adding a team:', error);
         return false;
     }
 }

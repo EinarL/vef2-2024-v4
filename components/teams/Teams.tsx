@@ -1,9 +1,9 @@
 'use client';
-import styles from "../public/styles/page.module.css";
-import { TeamRow } from "@/components/TeamRow";
+import styles from "../../public/styles/page.module.css";
+import { TeamRow } from "@/components/teams/TeamRow";
 import { AddTeamRow } from "./AddTeam";
 import React, { useState } from 'react';
-import { Team } from '../app/page';
+import { Team } from '../../app/page';
 
 interface TeamsProps {
   teams: Team[];
@@ -20,7 +20,7 @@ export function Teams({teams}: TeamsProps){
 
   return (
     <React.Fragment>
-      <button onClick={() => {setAdding(true)}} className={styles.btn}>+ Add a new team</button>
+      <button onClick={() => {setAdding(true)}} className={styles.btn}>+ Bæta við liði</button>
       <table className={styles.teams}>
         <thead>
           <tr>

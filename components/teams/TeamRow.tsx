@@ -1,5 +1,5 @@
 'use client';
-import styles from "../public/styles/page.module.css";
+import styles from "../../public/styles/page.module.css";
 import React, { useState } from 'react';
 
 
@@ -15,7 +15,12 @@ export function TeamRow({teamID, teamName, teamDescription, teamSlug}: TeamRowPr
     const [isDeleted, setDeleted] = useState(false);
     const toggleEdit = () => setOpen(!isOpen);
 
-    const [formData, setFormData] = useState({
+    const [tableData, setTableData] = useState({ // text that is on the table that displays the name and description of the team
+        name: teamName,
+        description: teamDescription
+    });
+
+    const [formData, setFormData] = useState({ // text that is on the <input> and <textarea> that you can change to edit the team
         name: teamName,
         description: teamDescription,
         slug: teamSlug
@@ -46,19 +51,35 @@ export function TeamRow({teamID, teamName, teamDescription, teamSlug}: TeamRowPr
             });
             if (response.ok) {
                 const data = await response.json();
-                setFormData(prevState => ({ // update the text on the table
+                setFormData(prevState => ({ // update the slug
                     ...prevState,
-                    name: formData.name,
-                    description: formData.description,
                     slug: data.slug
                 }));
+
+                setTableData(prevState => ({ // update the text in the html table row
+                    ...prevState,
+                    name: data.name,
+                    description: data.description
+                }));
             } else {
-                console.error('Failed to update team:', response.statusText);
+                const errorResponse = await response.json();
+                const errorMessages = errorResponse.errors.join(', ');
+                alert("Error editing team: " + errorMessages);
             }
         } catch (error) {
+            alert("Unable to edit the team due to an internal server error");
             console.error('An error occurred while updating a team:', error);
         }
         
+    };
+
+    const cancelEdit = () => {
+        setOpen(!isOpen)
+        setFormData(prevState => ({ // set the edited text back to the teams name and desc
+            ...prevState,
+            name: tableData.name,
+            description: tableData.description
+        }));
     };
 
     // runs when the user presses the delete button
@@ -69,10 +90,12 @@ export function TeamRow({teamID, teamName, teamDescription, teamSlug}: TeamRowPr
             if (response.ok) {
                 setDeleted(true);
             } else {
-                console.error('Failed to update team:', response.statusText);
+                alert("Error, unable to delete the team");
+                console.error('Failed to delete team:', response.statusText);
             }
         } catch (error) {
-            console.error('An error occurred while updating a team:', error);
+            alert("Unable to delete the team due to an internal server error");
+            console.error('An error occurred while deleting team:', error);
         }
     }
 
@@ -80,8 +103,8 @@ export function TeamRow({teamID, teamName, teamDescription, teamSlug}: TeamRowPr
         <React.Fragment key={teamID}>
             {!isDeleted && !isOpen && (
             <tr>
-                <td>{formData.name}</td>
-                <td>{truncateDescription(formData.description)}</td>
+                <td>{tableData.name}</td>
+                <td>{truncateDescription(tableData.description)}</td>
                 <td>
                     <button onClick={toggleEdit} className={`${styles.btn} ${styles.material_symbol}`}>edit</button>
                 </td>
@@ -100,6 +123,9 @@ export function TeamRow({teamID, teamName, teamDescription, teamSlug}: TeamRowPr
                     </td>
                     <td>
                         <button onClick={confirmEdit} className={`${styles.btn} ${styles.material_symbol}`}>check</button>
+                    </td>
+                    <td>
+                        <button onClick={cancelEdit} className={`${styles.btn} ${styles.material_symbol}`}>close</button>
                     </td>
                 </tr>
             )}

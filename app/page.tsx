@@ -1,5 +1,5 @@
-import { Teams } from "@/components/Teams";
-
+import { Teams } from "@/components/teams/Teams";
+import { Navbar } from "@/components/Navbar";
 
 export interface Team {
   id: number;
@@ -17,10 +17,14 @@ export default async function Home() {
 
     const teams: Team[] = await response.json();
     return (
-      <main>
-        <h1>Knattspyrnudeildin</h1>
-        <Teams teams={teams}/>
-      </main>
+      <div>
+        <header></header>
+        <main>
+          <Navbar/>
+          <h1>Knattspyrnudeildin</h1>
+          <Teams teams={teams}/>
+        </main>
+      </div>
     );
   } catch(error){
     console.error('Error fetching teams:', error);
