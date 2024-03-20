@@ -18,6 +18,14 @@ export interface MatchInfo {
 
 
 export default function Home() {
+    return (
+        <Suspense>
+            <MatchPage/>
+        </Suspense>
+    );
+  };
+
+function MatchPage(){
     const searchParams = useSearchParams();
  
     const matchInfoStringified = searchParams.get('matchInfo');
@@ -28,7 +36,7 @@ export default function Home() {
     if(matchInfo.home_score === matchInfo.away_score) winner = null;
 
     return (
-        <Suspense>
+        <div>
             <header></header>
             <main>
                 <Navbar/>
@@ -57,12 +65,9 @@ export default function Home() {
                     <h2>Error getting match information :(</h2>
                 )}
             </main>
-        </Suspense>
+        </div>
     );
-
-  };
-
-
+}
 
   /**
  * @param {string} dateString       24. des 2024 kl. 15:20
