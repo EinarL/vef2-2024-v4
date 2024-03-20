@@ -2,6 +2,7 @@
 import { Navbar } from "@/components/Navbar";
 import { useSearchParams  } from 'next/navigation';
 import styles from "../../public/styles/match.module.css";
+import { Suspense } from "react";
 
 
 export interface MatchInfo {
@@ -27,36 +28,36 @@ export default function Home() {
     if(matchInfo.home_score === matchInfo.away_score) winner = null;
 
     return (
-        <div>
-        <header></header>
-        <main>
-            <Navbar/>
-            {matchInfo ? (
-                <table className={styles.match}>
-                    <thead>
-                        <tr>
-                            <th colSpan={3}>{formatDate(matchInfo.date)}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{matchInfo.homeTeam}</td>
-                            <td>VS</td>
-                            <td>{matchInfo.awayTeam}</td>
-                        </tr>
-                        <tr>
-                            <td>{matchInfo.home_score}</td>
-                            <td>Staða</td>
-                            <td>{matchInfo.away_score}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <Suspense>
+            <header></header>
+            <main>
+                <Navbar/>
+                {matchInfo ? (
+                    <table className={styles.match}>
+                        <thead>
+                            <tr>
+                                <th colSpan={3}>{formatDate(matchInfo.date)}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{matchInfo.homeTeam}</td>
+                                <td>VS</td>
+                                <td>{matchInfo.awayTeam}</td>
+                            </tr>
+                            <tr>
+                                <td>{matchInfo.home_score}</td>
+                                <td>Staða</td>
+                                <td>{matchInfo.away_score}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-            ) : (
-                <h2>Error getting match information :(</h2>
-            )}
-        </main>
-        </div>
+                ) : (
+                    <h2>Error getting match information :(</h2>
+                )}
+            </main>
+        </Suspense>
     );
 
   };
