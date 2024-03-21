@@ -1,10 +1,9 @@
 'use client';
 import styles from "../../public/styles/matches.module.css";
 import { MatchRow } from "@/components/matches/MatchRow";
-import React, { useState } from 'react';
+import React from 'react';
 import { Match } from '../../app/matches/page';
 import { Team } from '../../app/page';
-import { BrowserRouter } from "react-router-dom";
 
 interface MatchesProps {
   matches: Match[];
@@ -18,8 +17,6 @@ export function Matches({matches, teams}: MatchesProps){
   teams.forEach(team => {
     teamIdToName[team.id] = team.name;
   });
-
-
 
   return (
     <React.Fragment>

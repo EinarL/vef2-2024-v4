@@ -58,7 +58,7 @@ export function AddTeamRow({ closeAddEditor, addRow }: AddTeamRowProps){
 
 async function confirmAdd(name: string, description: string){
     try{
-        const response = await fetch('https://vfor2-verkefni3.onrender.com/teams', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/teams`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

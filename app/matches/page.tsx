@@ -13,9 +13,9 @@ export interface Match {
 
 export default async function Home() {
   try{
-    const matchesResponse = await fetch('https://vfor2-verkefni3.onrender.com/matches', {cache: 'no-store'});
+    const matchesResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/matches`, {cache: 'no-store'});
     // need to fetch teams to map teamID to team name
-    const teamsResponse = await fetch('https://vfor2-verkefni3.onrender.com/teams', {cache: 'no-store'});
+    const teamsResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/teams`, {cache: 'no-store'});
     if(!matchesResponse.ok){
       throw new Error('Failed to fetch matches');
     }

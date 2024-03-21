@@ -10,7 +10,7 @@ export interface Team {
 
 export default async function Home() {
   try{
-    const response = await fetch('https://vfor2-verkefni3.onrender.com/teams', {cache: 'no-store'});
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/teams`, {cache: 'no-store'});
     if(!response.ok){
       throw new Error('Failed to fetch teams');
     }

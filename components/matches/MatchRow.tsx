@@ -1,9 +1,7 @@
 'use client';
-import { format } from 'date-fns';
 import React from 'react';
 import { Match } from '../../app/matches/page';
 import styles from "../../public/styles/page.module.css";
-import matchStyles from "../../public/styles/matches.module.css";
 import { useRouter } from 'next/navigation';
 
 interface MatchRowProps {

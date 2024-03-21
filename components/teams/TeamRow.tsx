@@ -39,7 +39,7 @@ export function TeamRow({teamID, teamName, teamDescription, teamSlug}: TeamRowPr
         setOpen(!isOpen)
 
         try{
-            const response = await fetch(`https://vfor2-verkefni3.onrender.com/teams/${formData.slug}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/teams/${formData.slug}`, {
                 method: 'PATCH',
                 headers: {
                   'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ export function TeamRow({teamID, teamName, teamDescription, teamSlug}: TeamRowPr
     const deleteTeam = async () => {
         if (!window.confirm(`Ertu viss um að þú vilt eyða ${formData.name}`)) return;
         try{
-            const response = await fetch(`https://vfor2-verkefni3.onrender.com/teams/${formData.slug}`, { method: 'DELETE' });
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/teams/${formData.slug}`, { method: 'DELETE' });
             if (response.ok) {
                 setDeleted(true);
             } else {
